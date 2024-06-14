@@ -46,7 +46,6 @@ CONFIG_CONTENT=$(cat <<EOF
         Timeout: 5 # Timeout for redis request
         Expiry: 60 # Expiry time (second)
       EnableFallback: false # Only support for Trojan and Vless
-EOF
 )
 
 # 将配置内容追加到 config.yml 文件末尾
