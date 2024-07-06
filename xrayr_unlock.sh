@@ -96,7 +96,7 @@ if [[ ! -f "$CONFIG_FILE" ]]; then
 fi
 
 # Replace the required lines
-sed -i 's|# RouteConfigPath: /etc/XrayR/route.json|RouteConfigPath: /root/XrayR/route.json|' "$CONFIG_FILE"
-sed -i 's|# OutboundConfigPath: /etc/XrayR/custom_outbound.json|OutboundConfigPath: /root/XrayR/custom_outbound.json|' "$CONFIG_FILE"
+sed -i 's|RouteConfigPath: # /etc/XrayR/route.json|RouteConfigPath: /root/XrayR/route.json|' "$CONFIG_FILE"
+sed -i 's|OutboundConfigPath: # /etc/XrayR/custom_outbound.json|OutboundConfigPath: /root/XrayR/custom_outbound.json|' "$CONFIG_FILE"
 
 echo "Config file updated successfully!"
