@@ -84,3 +84,19 @@ cat <<EOF > custom_outbound.json
   }
 ]
 EOF
+
+
+# Path to the config file
+CONFIG_FILE="config.yml"
+
+# Check if the config file exists
+if [[ ! -f "$CONFIG_FILE" ]]; then
+  echo "Config file not found!"
+  exit 1
+fi
+
+# Replace the required lines
+sed -i 's|# RouteConfigPath: /etc/XrayR/route.json|RouteConfigPath: /root/XrayR/route.json|' "$CONFIG_FILE"
+sed -i 's|# OutboundConfigPath: /etc/XrayR/custom_outbound.json|OutboundConfigPath: /root/XrayR/custom_outbound.json|' "$CONFIG_FILE"
+
+echo "Config file updated successfully!"
