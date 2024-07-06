@@ -1,4 +1,4 @@
-
+cd /root/XrayR
 # 创建配置文件 route.json
 cat <<EOF > route.json
 {
