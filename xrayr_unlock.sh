@@ -87,7 +87,7 @@ EOF
 
 
 # Path to the config file
-CONFIG_FILE="config.yml"
+CONFIG_FILE="/root/XrayR/config.yml"
 
 # Check if the config file exists
 if [[ ! -f "$CONFIG_FILE" ]]; then
@@ -99,6 +99,7 @@ fi
 sed -i 's|RouteConfigPath: # /etc/XrayR/route.json|RouteConfigPath: /root/XrayR/route.json|' "$CONFIG_FILE"
 sed -i 's|OutboundConfigPath: # /etc/XrayR/custom_outbound.json|OutboundConfigPath: /root/XrayR/custom_outbound.json|' "$CONFIG_FILE"
 echo "Config file updated successfully!"
+systemctl restart XrayR
 
 # 配置文件的路径
 CONFIG_FILE="/etc/wireguard/proxy.conf"
