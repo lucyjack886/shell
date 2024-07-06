@@ -95,10 +95,13 @@ if [[ ! -f "$CONFIG_FILE" ]]; then
   exit 1
 fi
 
+# Replace the required lines
+sed -i 's|RouteConfigPath: # /etc/XrayR/route.json|RouteConfigPath: /root/XrayR/route.json|' "$CONFIG_FILE"
+sed -i 's|OutboundConfigPath: # /etc/XrayR/custom_outbound.json|OutboundConfigPath: /root/XrayR/custom_outbound.json|' "$CONFIG_FILE"
+echo "Config file updated successfully!"
 
 # 配置文件的路径
 CONFIG_FILE="/etc/wireguard/proxy.conf"
-
 # 检查配置文件是否存在
 if [[ ! -f "$CONFIG_FILE" ]]; then
   echo "配置文件未找到！"
@@ -111,8 +114,4 @@ sed -i 's|BindAddress = 127.0.0.1:40000|BindAddress = :40000|' "$CONFIG_FILE"
 echo "配置文件更新成功！"
 
 systemctl restart wireproxy
-# Replace the required lines
-sed -i 's|RouteConfigPath: # /etc/XrayR/route.json|RouteConfigPath: /root/XrayR/route.json|' "$CONFIG_FILE"
-sed -i 's|OutboundConfigPath: # /etc/XrayR/custom_outbound.json|OutboundConfigPath: /root/XrayR/custom_outbound.json|' "$CONFIG_FILE"
 
-echo "Config file updated successfully!"
