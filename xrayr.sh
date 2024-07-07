@@ -46,7 +46,7 @@ if [ "$ARCH" == "x86_64" ]; then
     echo "Detected x86_64 architecture."
     wget https://github.com/XrayR-project/XrayR/releases/download/v0.9.1/XrayR-linux-64.zip
     unzip XrayR-linux-64.zip
-elif [[ "$ARCH" == arm* ]]; then
+elif [[ "$ARCH" == arm* || "$ARCH" == aarch* ]]; then
     echo "Detected ARM architecture."
     wget https://github.com/XrayR-project/XrayR/releases/download/v0.9.1/XrayR-linux-arm64-v8a.zip
     unzip XrayR-linux-arm64-v8a.zip
