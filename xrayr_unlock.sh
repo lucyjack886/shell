@@ -20,7 +20,7 @@ cat <<EOF > route.json
     },
     {
       "type": "field",
-      "outboundTag": "socks5-warp",
+      "outboundTag": "socks5-warp-ipv6",
       "domain": ["chatgpt.com","openai.com"]
     },
     {
@@ -110,7 +110,7 @@ if [[ ! -f "$CONFIG_FILE" ]]; then
 fi
 
 # 使用 sed 命令进行替换
-sed -i 's|BindAddress = 127.0.0.1:40000|BindAddress = :40000|' "$CONFIG_FILE"
+sed -i 's|BindAddress = 127.0.0.1:40000|BindAddress = [::1]:40000|' "$CONFIG_FILE"
 
 echo "配置文件更新成功！"
 
