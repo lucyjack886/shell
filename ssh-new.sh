@@ -20,11 +20,6 @@ update_authorized_keys() {
     local ssh_dir="$home_dir/.ssh"
     local authorized_keys="$ssh_dir/authorized_keys"
 
-    # Backup existing authorized_keys if it exists
-    if [ -f "$authorized_keys" ]; then
-        cp "$authorized_keys" "${authorized_keys}.bak"
-    fi
-
     # Remove existing authorized_keys file
     rm -f "$authorized_keys"
 
