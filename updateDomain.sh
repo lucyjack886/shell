@@ -11,6 +11,7 @@ replace_config() {
     if [ -f "$file" ]; then
         # 使用 sed 精确替换 ApiHost 的值
         sed -i '/ApiHost:/s|https://cf\.reami\.us|https://cf.xcvpn.us|' "$file"
+        sed -i '/ApiHost:/s|https://tg1\.1008609\.xyz|https://cf.xcvpn.us|' "$file"
         echo "替换完成：$file 中的 ApiHost 已更新为 https://cf.xcvpn.us。"
         return 0
     else
