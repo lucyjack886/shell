@@ -33,6 +33,7 @@ else
         if pgrep -f "$PROCESS_PATH" > /dev/null; then
             pkill -f "$PROCESS_PATH"
             echo "已终止进程：$PROCESS_PATH"
+            sleep 2
         else
             echo "未找到运行中的进程：$PROCESS_PATH"
         fi
