@@ -2,6 +2,27 @@
 
 CONFIG_FILE="/root/XrayR/config.yml"
 
+# 提示用户选择 NodeType
+while true; do
+    echo "请选择 NodeType:"
+    echo "1) V2ray"
+    echo "2) Trojan"
+    read -p "请输入选项 (1 或 2): " choice
+    case $choice in
+        1)
+            NodeType="V2ray"
+            break
+            ;;
+        2)
+            NodeType="Trojan"
+            break
+            ;;
+        *)
+            echo "无效的选项，请重新选择。"
+            ;;
+    esac
+done
+
 # 提示用户输入 NodeID
 while true; do
     read -p "请输入 NodeID (必须是数字): " NodeID
@@ -21,7 +42,7 @@ CONTENT=$(cat <<EOF
       ApiHost: "https://cf.xcvpn.us"
       ApiKey: "123e4567-e89b-12d3-a456-426655440009"
       NodeID: $NodeID
-      NodeType: V2ray  # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
+      NodeType: $NodeType  # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
       Timeout: 30 # Timeout for the api request
       EnableVless: false # Enable Vless for V2ray Type
       EnableXTLS: false # Enable XTLS for V2ray and Trojan
@@ -46,4 +67,7 @@ EOF
 # 将内容追加到配置文件末尾
 echo "$CONTENT" >> "$CONFIG_FILE"
 
+# 输出结果
 echo "内容已成功追加到 $CONFIG_FILE"
+echo "NodeType: $NodeType"
+echo "NodeID: $NodeID"
