@@ -29,7 +29,7 @@ configContent=$(cat <<EOL
     "Nodes": [
         {
             "Core": "sing",
-            "ApiHost": "https://cf.reami.us",
+            "ApiHost": "https://cf.xcvpn.us",
             "ApiKey": "123e4567-e89b-12d3-a456-426655440009",
             "NodeID": ${nodeID},
             "NodeType": "hysteria2",
