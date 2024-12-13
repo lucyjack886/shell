@@ -75,7 +75,7 @@ Nodes:
   -
     PanelType: "NewV2board" # Panel type: SSpanel, V2board, NewV2board, PMpanel, Proxypanel, V2RaySocks
     ApiConfig:
-      ApiHost: "https://cf.reami.us"
+      ApiHost: "https://cf.xcvpn.us"
       ApiKey: "123e4567-e89b-12d3-a456-426655440009"
       NodeID: $NODE_ID
       NodeType: Shadowsocks  # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
