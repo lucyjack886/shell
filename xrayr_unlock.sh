@@ -21,11 +21,6 @@ cat <<EOF > route.json
     {
       "type": "field",
       "outboundTag": "socks5-warp-ipv6",
-      "domain": ["chatgpt.com","openai.com"]
-    },
-    {
-      "type": "field",
-      "outboundTag": "socks5-warp-ipv6",
       "domain": [
         "geosite:netflix","geosite:disney","geosite:hbo"
       ]
