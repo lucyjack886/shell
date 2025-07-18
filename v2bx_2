@@ -1,0 +1,66 @@
+#!/bin/bash
+
+TROJAN_FILE="/root/V2bX/trojan.yml"
+
+# 1. 读取 NodeID
+read -p "请输入要添加的 NodeID: " NODE_ID
+if [[ ! "$NODE_ID" =~ ^[0-9]+$ ]]; then
+  echo "❌ NodeID 必须是数字"
+  exit 1
+fi
+
+# 2. 生成新节点 JSON（带逗号）到临时文件
+cat <<EOF > /tmp/newnode.json
+,
+    {
+      "Core": "sing",
+      "ApiHost": "https://xiyou.me",
+      "ApiKey": "123e4567-e89b-12d3-a456-426655440009",
+      "NodeID": $NODE_ID,
+      "NodeType": "trojan",
+      "Timeout": 30,
+      "ListenIP": "0.0.0.0",
+      "SendIP": "0.0.0.0",
+      "EnableProxyProtocol": false,
+      "EnableDNS": true,
+      "DomainStrategy": "ipv4_only",
+      "LimitConfig": {
+        "EnableRealtime": false,
+        "SpeedLimit": 0,
+        "IPLimit": 0,
+        "ConnLimit": 0,
+        "EnableDynamicSpeedLimit": false,
+        "DynamicSpeedLimitConfig": {
+          "Periodic": 60,
+          "Traffic": 1000,
+          "SpeedLimit": 100,
+          "ExpireTime": 60
+        }
+      },
+      "CertConfig": {
+        "CertMode": "self",
+        "RejectUnknownSni": false,
+        "CertDomain": "ithome.com",
+        "CertFile": "/root/V2bX/cert.pem",
+        "KeyFile": "/root/V2bX/private.pem",
+        "Email": "aaaa@gmail.com",
+        "Provider": "cloudflare",
+        "DNSEnv": {
+          "CF_DNS_API_TOKEN": "QcAznYiiBDc2wAmgVF5eRSG9MtoJW_9CENkRmx9umQ"
+        }
+      }
+    }
+EOF
+
+# 3. 插入节点到 trojan.yml 中 Nodes 的末尾
+if grep -q '"Nodes": \[' "$TROJAN_FILE"; then
+  sed -i '/^\s*]\s*$/{
+    r /tmp/newnode.json
+  }' "$TROJAN_FILE"
+  echo "✅ 已成功添加新节点 NodeID: $NODE_ID 到 $TROJAN_FILE"
+else
+  echo "❌ 未找到 Nodes 数组，请检查 $TROJAN_FILE 文件格式"
+fi
+
+# 4. 清理
+rm -f /tmp/newnode.json
