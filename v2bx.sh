@@ -127,7 +127,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/root/V2bX/V2bX server -c trojan.yml
+ExecStart=/root/V2bX/V2bX server -c /root/V2bX/trojan.yml
 Restart=always
 RestartSec=3
 
