@@ -118,6 +118,9 @@ cat <<EOF > trojan.yml
 
   ]
 }
+
+EOF
+
 # 创建XrayR 服务
 echo "[Unit]
 Description=V2bX Service
