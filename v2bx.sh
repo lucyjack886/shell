@@ -1,5 +1,38 @@
 #!/bin/bash
 
+# 证书配置文件
+cat > openssl.cnf << EOF
+[req]
+default_bits = 2048
+prompt = no
+default_md = sha256
+distinguished_name = dn
+req_extensions = v3_req
+
+[dn]
+C = GB
+ST = Greater Manchester
+L = Salford
+O = Sectigo Limited
+CN = ithome.com
+
+[v3_req]
+subjectAltName = DNS:ithome.com,DNS:www.ithome.com
+basicConstraints = CA:FALSE
+keyUsage = digitalSignature,keyEncipherment
+extendedKeyUsage = serverAuth
+authorityInfoAccess = OCSP;URI:http://ocsp.sectigo.com
+certificatePolicies = 1.3.6.1.4.1.6449.1.2.2.52
+crlDistributionPoints = URI:http://crl.sectigo.com/SectigoRSADomainValidationSecureServerCA.crl
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer
+EOF
+
+
+# 生成自签名证书
+openssl req -x509 -newkey rsa:2048 -nodes -keyout private.key -out cert.pem -days 365 -config openssl.cnf
+
+
 # 获取NodeID
 while true; do
     read -p "请输入NodeID: " NODE_ID
