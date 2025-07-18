@@ -1,0 +1,70 @@
+#!/bin/bash
+
+TROJAN_FILE="/root/V2bX/trojan.yml"
+
+# 1. 读取 NodeID
+read -p "请输入要添加的 NodeID: " NODE_ID
+if [[ ! "$NODE_ID" =~ ^[0-9]+$ ]]; then
+  echo "❌ NodeID 必须是数字"
+  exit 1
+fi
+
+# Step 2: 生成新节点 JSON（带逗号）
+NEW_NODE=$(cat <<EOF
+,
+    {
+      "Core": "sing",
+      "ApiHost": "https://flybird.cv",
+      "ApiKey": "123e4567-e89b-12d3-a456-426655440009",
+      "NodeID": $NODE_ID,
+      "NodeType": "trojan",
+      "Timeout": 30,
+      "ListenIP": "0.0.0.0",
+      "SendIP": "0.0.0.0",
+      "EnableProxyProtocol": false,
+      "EnableDNS": true,
+      "DomainStrategy": "ipv4_only",
+      "LimitConfig": {
+        "EnableRealtime": false,
+        "SpeedLimit": 0,
+        "IPLimit": 0,
+        "ConnLimit": 0,
+        "EnableDynamicSpeedLimit": false,
+        "DynamicSpeedLimitConfig": {
+          "Periodic": 60,
+          "Traffic": 1000,
+          "SpeedLimit": 100,
+          "ExpireTime": 60
+        }
+      },
+      "CertConfig": {
+        "CertMode": "self",
+        "RejectUnknownSni": false,
+        "CertDomain": "ithome.com",
+        "CertFile": "/root/V2bX/cert.pem",
+        "KeyFile": "/root/V2bX/private.pem",
+        "Email": "aaaa@gmail.com",
+        "Provider": "cloudflare",
+        "DNSEnv": {
+          "CF_DNS_API_TOKEN": "QcAznYiiBDc2wAmgVF5eRSG9MtoJW_9CENkRmx9umQ"
+        }
+      }
+    }
+EOF
+)
+
+# Step 3: 精准插入新节点到 "Nodes": [ ] 中的 ] 之前
+# 用 awk 定位到 "Nodes": [ 开始的位置，追踪 } 结束，在最后一个 ] 前插入新节点
+
+awk -v new_node="$NEW_NODE" '
+  BEGIN { in_nodes=0 }
+  /"Nodes"[ \t]*:[ \t]*\[/ { in_nodes=1 }
+  in_nodes && /^\s*]\s*$/ {
+    print new_node
+    in_nodes=0
+  }
+  { print }
+' "$TROJAN_FILE" > /tmp/trojan.new && mv /tmp/trojan.new "$TROJAN_FILE"
+
+echo "✅ 已成功插入新节点 NodeID: $NODE_ID 到 trojan.yml"
+
