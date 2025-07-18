@@ -111,14 +111,14 @@ cat <<EOF > trojan.yml
         "Email": "aaaa@gmail.com",
         "Provider": "cloudflare",
         "DNSEnv": {
-                "CF_DNS_API_TOKEN" : "QcAznYiiBDc2wAmgVF5eRSG9MtoJW_9CENkRmx9umQ"
+          "CF_DNS_API_TOKEN": "QcAznYiiBDc2wAmgVF5eRSG9MtoJW_9CENkRmx9umQ"
         }
       }
     }
-
   ]
 }
 EOF
+
 
 # 创建XrayR 服务
 echo "[Unit]
@@ -127,7 +127,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/root/V2bX/V2bX server -c trojan.json
+ExecStart=/root/V2bX/V2bX server -c trojan.yml
 Restart=always
 RestartSec=3
 
