@@ -118,7 +118,6 @@ cat <<EOF > trojan.yml
 
   ]
 }
-
 EOF
 
 # 创建XrayR 服务
