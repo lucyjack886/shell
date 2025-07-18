@@ -105,7 +105,7 @@ cat <<EOF > /root/V2bX/trojan.yml
       "CertConfig": {
         "CertMode": "self",
         "RejectUnknownSni": false,
-        "CertDomain": "test.com",
+        "CertDomain": "ithome.com",
         "CertFile": "/root/XrayR/cert.pem",
         "KeyFile": "/root/XrayR/private.pem",
         "Email": "aaaa@gmail.com",
