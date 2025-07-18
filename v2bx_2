@@ -9,8 +9,8 @@ if [[ ! "$NODE_ID" =~ ^[0-9]+$ ]]; then
   exit 1
 fi
 
-# 2. 生成新节点 JSON（带逗号）到临时文件
-cat <<EOF > /tmp/newnode.json
+# Step 2: 生成新节点 JSON（带逗号）
+NEW_NODE=$(cat <<EOF
 ,
     {
       "Core": "sing",
@@ -51,16 +51,20 @@ cat <<EOF > /tmp/newnode.json
       }
     }
 EOF
+)
 
-# 3. 插入节点到 trojan.yml 中 Nodes 的末尾
-if grep -q '"Nodes": \[' "$TROJAN_FILE"; then
-  sed -i '/^\s*]\s*$/{
-    r /tmp/newnode.json
-  }' "$TROJAN_FILE"
-  echo "✅ 已成功添加新节点 NodeID: $NODE_ID 到 $TROJAN_FILE"
-else
-  echo "❌ 未找到 Nodes 数组，请检查 $TROJAN_FILE 文件格式"
-fi
+# Step 3: 精准插入新节点到 "Nodes": [ ] 中的 ] 之前
+# 用 awk 定位到 "Nodes": [ 开始的位置，追踪 } 结束，在最后一个 ] 前插入新节点
 
-# 4. 清理
-rm -f /tmp/newnode.json
+awk -v new_node="$NEW_NODE" '
+  BEGIN { in_nodes=0 }
+  /"Nodes"[ \t]*:[ \t]*\[/ { in_nodes=1 }
+  in_nodes && /^\s*]\s*$/ {
+    print new_node
+    in_nodes=0
+  }
+  { print }
+' "$TROJAN_FILE" > /tmp/trojan.new && mv /tmp/trojan.new "$TROJAN_FILE"
+
+echo "✅ 已成功插入新节点 NodeID: $NODE_ID 到 trojan.yml"
+
