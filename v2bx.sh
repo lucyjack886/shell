@@ -44,19 +44,19 @@ ARCH=$(uname -m)
 # 根据系统架构下载并解压相应的文件
 if [ "$ARCH" == "x86_64" ]; then
     echo "Detected x86_64 architecture."
-    wget https://github.com/wyx2685/V2bX/releases/download/v0.2.5/V2bX-linux-arm64-v8a.zip
-    unzip V2bX-linux-arm64-v8a.zip
+    wget https://github.com/wyx2685/V2bX/releases/download/v0.2.5/V2bX-linux-64.zip
+    unzip V2bX-linux-64.zip    
 elif [[ "$ARCH" == arm* || "$ARCH" == aarch* ]]; then
     echo "Detected ARM architecture."
-    wget https://github.com/wyx2685/V2bX/releases/download/v0.2.5/V2bX-linux-64.zip
-    unzip V2bX-linux-64.zip
+    wget https://github.com/wyx2685/V2bX/releases/download/v0.2.5/V2bX-linux-arm64-v8a.zip
+    unzip V2bX-linux-arm64-v8a.zip
 else
     echo "Unsupported architecture: $ARCH"
     exit 1
 fi
 
 # 创建配置文件 config.yml
-cat <<EOF > trojan.yml
+cat <<EOF > /root/V2bX/trojan.yml
 {
   "Log": {
     "Level": "info",
