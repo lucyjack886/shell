@@ -67,4 +67,3 @@ awk -v new_node="$NEW_NODE" '
 ' "$TROJAN_FILE" > /tmp/trojan.new && mv /tmp/trojan.new "$TROJAN_FILE"
 
 echo "✅ 已成功插入新节点 NodeID: $NODE_ID 到 trojan.yml"
-
