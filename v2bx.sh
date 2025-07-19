@@ -139,8 +139,8 @@ cat <<EOF > /root/V2bX/trojan.yml
         "CertMode": "self",
         "RejectUnknownSni": false,
         "CertDomain": "ithome.com",
-        "CertFile": "/root/XrayR/cert.pem",
-        "KeyFile": "/root/XrayR/private.pem",
+        "CertFile": "/root/V2bX/cert.pem",
+        "KeyFile": "/root/V2bX/private.pem",
         "Email": "aaaa@gmail.com",
         "Provider": "cloudflare",
         "DNSEnv": {
