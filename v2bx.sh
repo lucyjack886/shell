@@ -88,6 +88,37 @@ else
     exit 1
 fi
 
+
+# 创建配置文件 sing_origin.json
+cat <<EOF > /root/V2bX/sing_origin.json
+{
+    "outbounds": [
+        {
+            "tag": "direct",
+            "type": "direct",
+            "domain_strategy": "ipv4_only"
+        }
+    ],
+    "route": {
+        "rules": [
+            {
+                "outbound": "direct",
+                "network": [
+                    "udp",
+                    "tcp"
+                ]
+            }
+        ]
+    },
+    "experimental": {
+        "cache_file": {
+            "enabled": true
+        }
+    }
+}
+EOF
+
+
 # 创建配置文件 config.yml
 cat <<EOF > /root/V2bX/trojan.yml
 {
