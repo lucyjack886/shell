@@ -137,7 +137,8 @@ cat <<EOF > /root/V2bX/trojan.yml
         "Enable": true,
         "Server": "time.apple.com",
         "ServerPort": 0
-      }
+      },
+      "OriginalPath": "/root/V2bX/sing_origin.json"      
     }
   ],
   "Nodes": [
@@ -148,7 +149,7 @@ cat <<EOF > /root/V2bX/trojan.yml
       "NodeID": $NODE_ID,
       "NodeType": "trojan",
       "Timeout": 30,
-      "ListenIP": "0.0.0.0",
+      "ListenIP": "::",
       "SendIP": "0.0.0.0",
       "EnableProxyProtocol": false,
       "EnableDNS": true,
