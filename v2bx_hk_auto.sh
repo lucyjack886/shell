@@ -33,18 +33,6 @@ EOF
 openssl req -x509 -newkey rsa:2048 -nodes -keyout private.key -out cert.pem -days 365 -config openssl.cnf
 
 
-# 获取NodeID
-while true; do
-    read -p "请输入NodeID: " NODE_ID
-    if [[ $NODE_ID =~ ^[0-9]+$ ]]; then
-        break
-    else
-        echo "无效输入，请输入一个有效的数字。"
-    fi
-done
-
-echo "你输入的NodeID是: $NODE_ID"
-
 # 检查并安装 wget 和 unzip
 install_dependencies() {
     if [[ "$OS_NAME" == "centos" ]]; then
