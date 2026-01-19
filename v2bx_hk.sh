@@ -80,32 +80,48 @@ fi
 # 创建配置文件 sing_origin.json
 cat <<EOF > /root/V2bX/sing_origin.json
 {
-    "outbounds": [
-        {
-            "tag": "direct",
-            "type": "direct",
-            "domain_strategy": "ipv4_only"
-        }
-    ],
-    "route": {
-        "rules": [
-            {
-                "outbound": "direct",
-                "network": [
-                    "udp",
-                    "tcp"
-                ]
-            }
-        ]
+  "outbounds": [
+    {
+      "type": "direct",
+      "tag": "direct",
+      "domain_strategy": "ipv4_only"
     },
-    "experimental": {
-        "cache_file": {
-            "enabled": true
-        }
+    {
+      "type": "socks",
+      "tag": "socks-out",
+      "server": "2603:c02d:8501:5f01:0:ed25:c8f2:d5a",
+      "server_port": 10808,
+      "username": "starry",
+      "password": "SkyCloud2026Pass@123",
+      "network": "tcp",
+      "udp_over_tcp": false
     }
+  ],
+  "route": {
+    "rules": [
+      {
+        "domain_suffix": [
+          "gemini.google.com",
+          "chatgpt.com"
+        ],
+        "outbound": "socks-out"
+      },
+      {
+        "network": [
+          "udp",
+          "tcp"
+        ],
+        "outbound": "direct"
+      }
+    ]
+  },
+  "experimental": {
+    "cache_file": {
+      "enabled": true
+    }
+  }
 }
 EOF
-
 
 # 创建配置文件 config.yml
 cat <<EOF > /root/V2bX/trojan.yml
@@ -399,6 +415,3 @@ sudo iptables -P FORWARD ACCEPT
 sudo iptables -P OUTPUT ACCEPT
 sudo iptables -F
 
-# 重启并检查XrayR服务状态
-sleep 2
-sudo systemctl status V2bX
